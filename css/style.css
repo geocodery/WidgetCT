@@ -1,61 +1,34 @@
-.field { 
-padding:4px 4px;
+/*Contenedor de caracter informativo*/
+.contentsCtg{
+  text-align: justify;
+  text-justify: inter-word;
+  margin-bottom: 12px;
 }
 
-.file-upload {
-overflow: hidden;
-display: inline-block;
-position: relative; 
-vertical-align: middle;
-text-align: center;
-border: 2px solid #666666;
-background: #444444;
--moz-border-radius: 6px;
--webkit-border-radius: 6px;
-border-radius: 6px;
-color: #fff;
-text-shadow: 0px 2px 3px #555;
-cursor:pointer;
-}
-      
-.file-upload:hover { 
-background-color: #454545;
+select.combosCtg {
+  font-size: 12px;
+  width: 100%;
+  height: 150px;
+  color: #056896;
 }
 
-    
-.file-upload input {
-position: absolute;
-top: 0;
-left: 0;
-margin: 0;
-font-size: 70px;
-opacity: 0;
-filter: alpha(opacity=0);
-z-index:2;
-}
-    
-.file-upload strong { 
-font: normal 1.75em arial,sans-serif; 
-} 
-      
-.file-upload span {
-position: absolute;
-top: 0;
-left: 0;
-display: inline-block;
-
-padding-top: .45em;
+select.combosCtg option{
+  padding: 5px;
+  color: #056896;
+  cursor: pointer;
 }
 
-.file-upload { height: 3em; }
-.file-upload,
-.file-upload span { width: 10em; }  
+select.combosCtg option:hover{
+  background-color: #ddd;
+  font-weight: bold;
+}
 
 /*-------------------------------------------*/
 
 .consultatematica h3 {
   font-size: 1.2em;
 }
+
 .consultatematica h3, p {
   margin-top: 0;
 }
@@ -71,8 +44,7 @@ padding-top: .45em;
 .menuCtg{
 	width: 100%;
 	margin-bottom: 12px;
-	border-radius: 5px;
-	height: 32px;
+	height: 30px;
   border: 1px solid #ddd;
 }
 
@@ -82,26 +54,33 @@ div.tabCtg {
 	flex-direction: row;
 	justify-content: space-between;
   overflow: hidden;
-  border-radius: 5px;
   background-color: #f1f1f1;
   margin-bottom: 12px;
 }
 
 
 div.tabCtg button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 10px;
-    transition: 0.3s;
-    width: 50%;
+  background-color: white;
+  float: left;
+  outline: none;
+  cursor: pointer;
+  padding: 10px;
+  transition: 0.3s;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 50%;
 }
 
 
 div.tabCtg button:hover {
     background-color: #ddd;
+    font-weight: bold;
+}
+
+.method.active{
+  /*background-color: #ccc;*/
+  font-weight: bold;  
+  border-bottom: 2px solid #898989;
 }
 
 .tabcontentCtg{
@@ -112,9 +91,32 @@ div.tabCtg button:hover {
   display: block;
 }
 
-.method.active{
-  background-color: #ccc;
+.execButtonCtg {
+  width: 100%;
+  text-align: center;
+  background-color: #004c73;
+  border: none;
+  border-radius: 0px;
+  line-height: 30px;
+  vertical-align: middle;
+  height: 30px;
+  color: #FFF;
+  cursor:pointer;
+  display: inline-block;
+  margin-right:15px;
+  box-sizing: content-box;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /*Estilos de botones de dibujo*/
 
@@ -127,6 +129,13 @@ div.tabCtg button:hover {
   margin: 3px;
   margin-bottom: 12px;
   /*background-color: #ddd;*/
+}
+
+.drawBufferCtg{
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  border: none;
 }
 
 .resbtnCtg{
@@ -162,6 +171,15 @@ div.tabCtg button:hover {
   background-color: #e95453;
 }
 
+#buffer{
+  background: url('img/buffer.png') no-repeat 50% 50%;
+  background-color: #004c73;  
+}
+
+#uploadShp{
+  background: url('img/upload.png') no-repeat 50% 50%;
+  background-color: #ddd;
+}
 /*.drawHz.active{
   background-color: #e95453;
 }
@@ -205,14 +223,14 @@ div.uploadCtg input[type="file"] {
     box-sizing: content-box;
 }
 
-.tableContainerCtg{
+/*.tableContainerCtg{
   display: none;
 }
 
 .tableContainerCtg.active{
   display: block;
 }
-
+*/
 /* ::::::::::::::::::::::::::::::::::::::: */
 /*Estilos de la seccion de estado*/
 
@@ -282,20 +300,18 @@ progress#barCtg:after  {
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-.summary{
+.resultsProcessCtg{
   display: none;
-  padding-top: 5px;
   margin-top: 10px;
-  height: auto; 
+  height: auto;
   border-radius: 5px;
   border: 1px solid #ddd;
-  width: 100%; 
-  margin-bottom: 12px;
+  width: 100%;
   font-family: "Courier New", Times, monospace;
-  padding-bottom: 3%;
+  padding: 2%;
 }
 
-.summary.active{
+.resultsProcessCtg.active{
   display: block;
 }
 
@@ -318,4 +334,26 @@ progress#barCtg:after  {
   margin: 5px; 
   background-color:#eee;
   width: 50%; 
+}
+
+
+div.tableContainerCtg{
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+
+
+/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
+.bufferCtgClass{
+  display: none;
+  margin-bottom: 20px;
+}
+
+.bufferCtgClass.active{
+  display: block;
+  display: flex;
+  flex-direction: row;
 }
