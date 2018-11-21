@@ -32,7 +32,7 @@ define({
     lblSelectFile: 'Seleccionar archivo (.zip)',
     error: 'Error en el proceso',
     download: 'DESCARGAR',
-    extent: 'EXTENT',
+    extent: 'EXTENT'
   }
   // add supported locales below:
   // , "zh-cn": true

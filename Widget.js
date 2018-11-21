@@ -21,10 +21,7 @@ define([
         "dojo/query",
         "dojo/store/Memory",
         "dojo/string",
-
         "dijit/form/MultiSelect",
-
-
         "esri/Color",
         "esri/geometry/Circle",
         "esri/geometry/geometryEngine",
@@ -42,11 +39,8 @@ define([
         "esri/symbols/SimpleLineSymbol",
         "esri/symbols/SimpleMarkerSymbol",
         "esri/tasks/BufferParameters",
-
         "esri/tasks/Geoprocessor",
         "esri/tasks/JobInfo",
-
-
         "esri/tasks/GeometryService",
         "esri/tasks/query",
         "esri/tasks/QueryTask",
@@ -111,28 +105,27 @@ define([
         return declare([BaseWidget], {
 
         
-        baseClass: 'ConsultaTematica',  // Clase principal para CSS
+        baseClass: 'ConsultaTematicaGeologica',  // Clase principal para CSS
         postCreate: function() {        // Ejecuta despues de crearse
           this.inherited(arguments);
           self = this;
-          console.log('ConsultaTematica::postCreate');
+          console.log('ConsultaTematicaGeologica::postCreate');
         },
 
         // Ejecuta al abrir widget 
         startup: function () {
             this.inherited(arguments);  
             self._createToolbarCtg();
-            self._searchService();
+            self._searchServiceCtg();
             self = this;
-            self._ValuesfromField();
-            console.log('ConsultaTematica::startup');
-
-            // self.startupAddShp();
+            self._ValuesfromFieldCtg();
+            self.startupAddShpCtg();
+            console.log('ConsultaTematicaGeologica::startup');
         },
 
         // Configuracion de ventana de trabajo
         onOpen: function(){
-          console.log('ConsultaTematica::onOpen');
+          console.log('ConsultaTematicaGeologica::onOpen');
           var panel = this.getPanel();
           panel.position.height = 700;
           panel.setPosition(panel.position);
@@ -140,23 +133,23 @@ define([
         },
 
         // Configuracion del cambio entre pestañas
-        _onchangetab: function(evt){
+        _onchangetabCtg: function(evt){
             var currentid = evt.target.id;
-            self._activeclass("method", currentid);
+            self._activeclassCtg("methodCtg", currentid);
             if (currentid == "selectbtnCtg"){
-                self._activeclass("tabcontentCtg", "selectCtg");
+                self._activeclassCtg("tabcontentCtg", "selectCtg");
               }
             if (currentid == "drawbtnCtg"){
-                self._activeclass("tabcontentCtg", "drawCtg")
+                self._activeclassCtg("tabcontentCtg", "drawCtg")
               }
             if(currentid == "resbtnCtg"){
-                self._activeclass("tabcontentCtg", "resultCtg")
+                self._activeclassCtg("tabcontentCtg", "resultCtg")
                 tb.deactivate();
               }
         },
 
         // Activa y desactiva clases
-        _activeclass: function(offclass, onid){
+        _activeclassCtg: function(offclass, onid){
             var tab = query("." + offclass);
             for(i = 0; i < tab.length; i++){
                 domClass.remove(tab[i].id, "active");
@@ -165,7 +158,7 @@ define([
         },
 
         // Cambia el color de las herramientas de dibujo
-        _changeColorToolbar: function(onid){
+        _changeColorToolbarCtg: function(onid){
             var array = ['point', 'polyline', 'polygon'];
             for (i=0; i < array.length; i++){
                 if (array[i] != onid){
@@ -181,17 +174,18 @@ define([
         // * BUSQUEDA DEL DATO DE SERVICIO
 
         // Selecciona la url del servicio
-        _selectUrlService: function(code){
-          var url="http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/";
+        _selectUrlServiceCtg: function(code){
+          // "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/"
+          var url=self.config.serviceGeo;
           url=url.concat(code);
           return url;
         },
 
         // Busca y llama al servicio buscado
-        _searchService: function(){
-          on(dom.byId("queryentity"), "change", function () {
-            self.code = dom.byId("queryentity").value
-            var urlService = self._selectUrlService(self.code);
+        _searchServiceCtg: function(){
+          on(dom.byId("queryentityCtg"), "change", function () {
+            self.codeCtg = dom.byId("queryentityCtg").value
+            var urlService = self._selectUrlServiceCtg(self.codeCtg);
             var requestHandle = esriRequest({
               "url": urlService,
               "content": {
@@ -199,12 +193,12 @@ define([
               },
               "callbackParamName": "callback"
             });
-            requestHandle.then(self._requestSucceeded, self._errorHandler);
+            requestHandle.then(self._requestSucceededCtg, self._errorHandlerCtg);
           });
         },
 
         // Agrega los campos recogidos del servicio
-        _requestSucceeded: function(response, io){
+        _requestSucceededCtg: function(response, io){
           var fieldInfo;
           var FieldNames = [];
           console.log("Fields");
@@ -216,24 +210,24 @@ define([
           var FieldNames = new Memory({
                         data: FieldNames
                     });
-          var comboField = registry.byId("itemsFields");
+          var comboField = registry.byId("itemsFieldsCtg");
           if(comboField) {
               comboField.store = FieldNames;
           }else {
               comboField = new ComboBox({
-                  id: "itemsFields",
+                  id: "itemsFieldsCtg",
                   store: FieldNames,
                   searchAttr: "Field"},
-                  "itemsFields"
+                  "itemsFieldsCtg"
                   );
                 };
         },
 
         // Funcionalidad de hacer query al campo seleccionado considerando un parámetro
-        _ValuesfromField :function(){
+        _ValuesfromFieldCtg :function(){
           var query = new Query();
-          on(dom.byId("searchDesc"), "click", function(evt){
-            var urlService = self._selectUrlService(dom.byId("queryentity").value);
+          on(dom.byId("searchDescCtg"), "click", function(evt){
+            var urlService = self._selectUrlServiceCtg(dom.byId("queryentityCtg").value);
             var queryTask = new QueryTask(urlService);
             var layer = new FeatureLayer(urlService, {
                   mode: FeatureLayer.MODE_ONDEMAND,
@@ -241,8 +235,8 @@ define([
               opacity: 0.9,
               visible: true
             });
-            var nameSearch = dom.byId("searchValue").value;
-            query.text = dom.byId("itemsFields").value;
+            var nameSearch = dom.byId("searchValueCtg").value;
+            query.text = dom.byId("itemsFieldsCtg").value;
             query.outFields =  ["*"];
             
             self.sqlCtg = "UPPER(" + query.text + ") LIKE UPPER('%" + nameSearch + "%')";
@@ -250,17 +244,17 @@ define([
             query.returnGeometry = true;
             query.outSpatialReference = {wkid:102100};
             console.log(query);
-            queryTask.execute(query).then(self._showFieldValues, self._errorHandler);
+            queryTask.execute(query).then(self._showFieldValuesCtg, self._errorHandlerCtg);
           });
         },
 
         //Muestra los resultados encontrados
-        _showFieldValues: function(resultado) {
+        _showFieldValuesCtg: function(resultado) {
           
           if(resultado.value){
             var results = resultado.value;
           }else{
-            self._activeContainers("info", true);
+            self._activeContainersCtg("infoCtg", true);
             var results = resultado;
           }
 
@@ -275,7 +269,7 @@ define([
           for (var i = 0; i < resultCount; i++) {
             var featureAttributes = results.features[i].attributes;
             for (var attr in featureAttributes) {
-              if(attr == dom.byId("itemsFields").value){
+              if(attr == dom.byId("itemsFieldsCtg").value){
                 FieldValues.push(featureAttributes[attr]);
               }
             }
@@ -288,7 +282,7 @@ define([
             showValues.push("<li>" + uniqueFields[i] + "</li>");
           }
           showValues.push("</ul>");
-          dom.byId("info").innerHTML = showValues.join("");
+          dom.byId("infoCtg").innerHTML = showValues.join("");
 
           var graphicsLayer = new GraphicsLayer();
           var markerSymbol = new PictureMarkerSymbol({
@@ -331,7 +325,7 @@ define([
         _activateToolCtg: function(evt){
             _viewerMap.graphics.clear();
             var tool = evt.target.id.toUpperCase();
-            self._changeColorToolbar(tool.toLowerCase())
+            self._changeColorToolbarCtg(tool.toLowerCase())
             if (tool != "ERASE"){
                 tb.activate(Draw[tool]);
                 _viewerMap.setInfoWindowOnClick(false);
@@ -370,10 +364,10 @@ define([
 
           if (evt.geometry.type == "polygon"){
               console.log(evt.geometry);
-              self.area = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "hectares");
-              console.log(self.area);
+              self.areaCtg = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "hectares");
+              console.log(self.areaCtg);
           }
-          self.geom = inputGeom.replace(/'/g, '"');
+          self.geomCtg = inputGeom.replace(/'/g, '"');
         },
 
         _removeLayersCtg: function(){
@@ -392,45 +386,42 @@ define([
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         // Obtener variable de consulta
-        _getSelectedOption: function(idobj){
+        _getSelectedOptionCtg: function(idobj){
             var res = dojo.byId(idobj);
             var selected = res.options[res.selectedIndex].value;
             return selected;
         },
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        _executeProcess: function(){
-          console.log("_executeProcess");
+        _executeProcessCtg: function(){
+          console.log("_executeProcessCtg");
           var sql;
 
-          var itemsFields = dom.byId("itemsFields").value;
-          var nameSearch = dom.byId("searchValue").value;
+          var itemsFields = dom.byId("itemsFieldsCtg").value;
+          var nameSearch = dom.byId("searchValueCtg").value;
           if(nameSearch.length>0 & itemsFields.length>0){
             sql = "UPPER(" + itemsFields + ") LIKE UPPER('%" + nameSearch + "%')";
           }else{
             sql = "";
           }
-          console.log(sql);
 
           var geometry;
-          if(self.graphicBuffer){
-            geometry = self.graphicBuffer;
-          }else if(self.geom){
-            geometry = self.geom;
+          if(self.graphicBufferCtg){
+            geometry = self.graphicBufferCtg;
+          }else if(self.geomCtg){
+            geometry = self.geomCtg;
           }
-          console.log(geometry);
-          console.log(self.area);
 
-          if (self.area) {
-            if (self.area <= 100000) {
-                self._gprun(geometry, self.code, sql);
-                delete self.graphicBuffer;
+          if (self.areaCtg) {
+            if (self.areaCtg <= 100000) {
+                self._gprunCtg(geometry, self.codeCtg, sql);
+                delete self.graphicBufferCtg;
             }else{
                 alert("El grafico realizado supera el valor de area permitido");
             }
           }else{
             if (sql!="") {
-              self._gprun(geometry, self.code, sql);
+              self._gprunCtg(geometry, self.codeCtg, sql);
             }
           }
         },
@@ -438,35 +429,34 @@ define([
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         // Crear Buffer
 
-        _activateBuffer: function(){
-          if(dojo.byId("actBuff").checked){
-            self._activeContainers("bufferCtg", true);
+        _activateBufferCtg: function(){
+          if(dojo.byId("actBuffCtg").checked){
+            self._activeContainersCtg("bufferCtg", true);
           }else{
-            self._activeContainers("bufferCtg", false);
+            self._activeContainersCtg("bufferCtg", false);
           }
         },
 
-        _makeBuffer: function(){
+        _makeBufferCtg: function(){
           var params = new BufferParameters();
           params.distances = [ dom.byId("bufferLength").value ];
           params.outSpatialReference = _viewerMap.spatialReference;
-          params.unit = GeometryService[dom.byId("unit").value];
-
+          params.unit = GeometryService[dom.byId("unitCtg").value];
           normalizeUtils.normalizeCentralMeridian([self.geometryEvtCtg]).then(function(normalizedGeometries){
             var normalizedGeometry = normalizedGeometries[0];
             if (normalizedGeometry.type === "polygon"){
               esriConfig.defaults.geometryService.simplify([normalizedGeometry], function(geometries){
                 params.geometries = geometries;
-                esriConfig.defaults.geometryService.buffer(params, self._showBuffer);
+                esriConfig.defaults.geometryService.buffer(params, self._showBufferCtg);
               });
             } else {
               params.geometries = [normalizedGeometry];
-              esriConfig.defaults.geometryService.buffer(params, self._showBuffer);
+              esriConfig.defaults.geometryService.buffer(params, self._showBufferCtg);
             }
           });
         },
 
-        _showBuffer: function(bufferedGeometries){
+        _showBufferCtg: function(bufferedGeometries){
           var symbol = new SimpleFillSymbol(
             SimpleFillSymbol.STYLE_SOLID,
             new SimpleLineSymbol(
@@ -480,21 +470,17 @@ define([
             var graphic = new Graphic(geometry, symbol);
             var inputGeomBuffer = JSON.stringify(graphic.geometry).replace(/['"]+/g, '\'');
             var GeomBuffer = inputGeomBuffer.replace(/'/g, '"');
-            self.graphicBuffer = GeomBuffer;
+            self.graphicBufferCtg = GeomBuffer;
             _viewerMap.graphics.add(graphic);
-            self.area = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "hectares");
-            console.log(self.area);
-            // self._gprun(inputGeomBuffer, self._getSelectedOption('queryentity'));
+            self.areaCtg = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "hectares");
           });
         },
 
 
         //----------------------------------------------------------------------------------
-        //----------------------------------------------------------------------------------
-        //----------------------------------------------------------------------------------
         // Cargar informacion local || shapefile en .zip
         // SE OBTIENE LA URL DE LA ORGANIZACION
-        startupAddShp: function(){
+        startupAddShpCtg: function(){
           json = this.config.addShapefile;
           esriConfig.defaults.io.proxyUrl = "/proxy/";
         },
@@ -520,7 +506,7 @@ define([
           if(info.ok){
             info.baseFileName = self._getBaseFileNameCtg(info.filename);
           }else{
-            self._errorHandler();
+            self._errorHandlerCtg();
           }
           return info;
         },
@@ -529,7 +515,7 @@ define([
           var fileInfo = self._getFileInfoCtg();
           if (fileInfo.ok){
             _viewerMap.graphics.clear();
-            self._generateFeatureCollection(fileInfo.filename);
+            self._generateFeatureCollectionCtg(fileInfo.filename);
           };
         },
 
@@ -538,11 +524,13 @@ define([
           return (sv.indexOf(sfx, (sv.length - sfx.length)) !== -1);
         },
 
-        _generateFeatureCollection: function(fileName){
+        _generateFeatureCollectionCtg: function(fileName){
           console.log(fileName);
           var name = fileName.split(".");
+          console.log(name);
           name = name[0].replace("c:\\fakepath\\", "");
-          dom.byId('upload-status').innerHTML = '<b>Loading </b>' + name;
+          console.log(name);
+          dom.byId('upload-statusCtg').innerHTML = '<b>Loading </b>' + name;
 
           var params = {
               'name': name,
@@ -573,18 +561,18 @@ define([
             handleAs: 'json',
             load: lang.hitch(this, function (response) {
                  if (response.error) {
-                    self._errorHandler(response.error);
+                    self._errorHandlerCtg(response.error);
                     return;
                 }
                 var layerName = response.featureCollection.layers[0].layerDefinition.name;
-                dom.byId('upload-status').innerHTML = '<b>Cargado: </b>' + layerName;
-                self._addShapefileToMap(response.featureCollection);
+                dom.byId('upload-statusCtg').innerHTML = '<b>Cargado: </b>' + layerName;
+                self._addShapefileToMapCtg(response.featureCollection);
             }),
-            error: lang.hitch(this, self._errorHandler)
+            error: lang.hitch(this, self._errorHandlerCtg)
           });
         },
 
-        _addShapefileToMap: function(featureCollection){
+        _addShapefileToMapCtg: function(featureCollection){
           var fullExtent;
           var layers = [];
           arrayUtils.forEach(featureCollection.layers, function (layer) {
@@ -595,7 +583,7 @@ define([
               featureLayer.on('click', function (event) {
                   _viewerMap.infoWindow.setFeatures([event.graphic]);
               });
-              self._changeRenderer(featureLayer);
+              self._changeRendererCtg(featureLayer);
               fullExtent = fullExtent ?
                 fullExtent.union(featureLayer.fullExtent) : featureLayer.fullExtent;
               layers.push(featureLayer);
@@ -604,16 +592,16 @@ define([
           self.geometryEvtCtg = geom;
           var graphic = new Graphic(geom);
           inputGeom = JSON.stringify(graphic.geometry).replace(/['"]+/g, '\'');
-          self.area = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "hectares");
-          console.log(self.area);
-          self.geom = inputGeom.replace(/'/g, '"');
+          self.areaCtg = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "hectares");
+          console.log(self.areaCtg);
+          self.geomCtg = inputGeom.replace(/'/g, '"');
 
           _viewerMap.addLayers(layers);
           _viewerMap.setExtent(fullExtent.expand(1.25), true);
-          dom.byId('upload-status').innerHTML = "";
+          dom.byId('upload-statusCtg').innerHTML = "";
         },
 
-        _changeRenderer: function(layer){
+        _changeRendererCtg: function(layer){
           var symbol = null;
           switch (layer.geometryType) {
               case 'esriGeometryPoint':
@@ -642,9 +630,9 @@ define([
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         // Ejecutar geoproceso
-        _gprun: function(inputjson, queryentity, sql){
-            self._activeContainers("loaderCtg", true);
-            self._activeContainers("errorCtg", false);
+        _gprunCtg: function(inputjson, queryentity, sql){
+            self._activeContainersCtg("loaderCtg", true);
+            self._activeContainersCtg("errorCtg", false);
             // Se crea el objeto de la clase Geoprocesor
             // Se le agrega el parametro de la url del servicio
             gp = new Geoprocessor(self.config.serviceUrl);
@@ -652,28 +640,28 @@ define([
             // Se establecen los parametros del geoproceso
             var params = {'input_jsonService': inputjson, 'input_queryEntity': queryentity, 'input_query': sql};
             // se ejecuta el geoproceso
-            gp.submitJob(params, self._completeCallback, self._statusCallback);
+            gp.submitJob(params, self._completeCallbackCtg, self._statusCallbackCtg);
         },
 
         // Obtener los mensajes durante la ejecucion del proceso
-        _statusCallback: function(JobInfo){
+        _statusCallbackCtg: function(JobInfo){
             console.log(JobInfo.jobStatus);
         },
 
         // Funcion a ejecutar cuando el proceso finaliza
-        _completeCallback: function(JobInfo){
+        _completeCallbackCtg: function(JobInfo){
             // Si el proceso obtiene un error
             if(JobInfo.jobStatus=="esriJobFailed"){
                 // Se activa el icono de error
-                self._activeContainers("errorCtg", true);
-                self._activeContainers("loaderCtg", false)
+                self._activeContainersCtg("errorCtg", true);
+                self._activeContainersCtg("loaderCtg", false)
             }else{
-                gp.getResultData(JobInfo.jobId, "output_exportShp", self._showFieldValues);
-                gp.getResultData(JobInfo.jobId, "output_exportZip", self._downloadZip);
-                gp.getResultData(JobInfo.jobId, "output_exporJson", self._extentProcess);
+                gp.getResultData(JobInfo.jobId, "output_exportShp", self._showFieldValuesCtg);
+                gp.getResultData(JobInfo.jobId, "output_exportZip", self._downloadZipCtg);
+                gp.getResultData(JobInfo.jobId, "output_exporJson", self._extentProcessCtg);
                 // Se activa el boton de descarga
-                self._activeContainers("loaderCtg", false);
-                self._activeContainers("resultCtg", true);
+                self._activeContainersCtg("loaderCtg", false);
+                self._activeContainersCtg("resultCtg", true);
             }
         },
 
@@ -682,42 +670,42 @@ define([
         // Muestra resultados
 
         // Se agrega la ruta de desacarga
-        _downloadZip: function(outputFile){
+        _downloadZipCtg: function(outputFile){
            // Se obtiene la url del resultado del geoproceso
            var url = outputFile.value.url;
            console.log(url);
            // Se agrega la url a la etiqueta html <a>
-           domAttr.set(dojo.byId("downloadzip"), 'href', url);
+           domAttr.set(dojo.byId("downloadzipCtg"), 'href', url);
         },
 
-        _setExtent: function(ext){
+        _setExtentCtg: function(ext){
           _viewerMap.setExtent(ext, true);
         },
 
-        _zoomExtent: function(evt){
-            self._setExtent(self.extCtg);
+        _zoomExtentCtg: function(evt){
+            self._setExtentCtg(self.extCtg);
         },
 
-        _extentProcess: function(extent){
+        _extentProcessCtg: function(extent){
             console.log(extent);
             var ext_tmp = extent.value.replace(/u/g, '');
             ext_tmp = ext_tmp.replace(/'/g, "\"");
             self.extCtg = new esri.geometry.Extent(JSON.parse(ext_tmp));
-            self._setExtent(self.extCtg);
-            on(dojo.byId("extentgeometry"), "click", self._zoomExtent);
+            self._setExtentCtg(self.extCtg);
+            on(dojo.byId("extentgeometryCtg"), "click", self._zoomExtentCtg);
         },
 
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         // Muestra el error del lado del cliente
-        _errorHandler: function(error) {
-          dom.byId('upload-status').innerHTML =
+        _errorHandlerCtg: function(error) {
+          dom.byId('upload-statusCtg').innerHTML =
           "<p style='color:red'>" + error.message + "</p>";
         },
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         // Activar o descativar contenedores
-        _activeContainers: function(onid, value){
+        _activeContainersCtg: function(onid, value){
             if(value){
                 // Agrega una subclase a un elemento
                 domClass.add(onid, "active");
@@ -726,7 +714,5 @@ define([
                 domClass.remove(onid, "active")
             }
         },
-
-
       });
     });

@@ -1,3 +1,4 @@
 {
-  "serviceUrl": "http://geocatmin.ingemmet.gob.pe:6080/arcgis/rest/services/GEOPROCESO/gpHazardJSON/GPServer/gpHazardsJSON"
+  "serviceGeo": "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/",
+  "serviceUrl": "http://geocatminapp.ingemmet.gob.pe/arcgis/rest/services/temp/consultatematica/GPServer/Consultas%20Tematicas"
 }

@@ -4,12 +4,12 @@
 	</div>
 
  	<div class="tabCtg">
-        <button class="method active" id="selectbtnCtg"  data-dojo-attach-event="onClick: _onchangetab">${nls.select}</button>
-        <button class="method" id="drawbtnCtg"  data-dojo-attach-event="onClick: _onchangetab">Consulta</button>
+        <button class="methodCtg active" id="selectbtnCtg"  data-dojo-attach-event="onClick: _onchangetabCtg">${nls.select}</button>
+        <button class="methodCtg" id="drawbtnCtg"  data-dojo-attach-event="onClick: _onchangetabCtg">Consulta</button>
 	</div>
 
 	<div id="selectCtg" class="tabcontentCtg active">
-		<select multiple="multiple" data-dojo-attach-point="containerNode,focusNode" class="combosCtg" id="queryentity">
+		<select multiple="multiple" data-dojo-attach-point="containerNode, focusNode" class="combosCtg" id="queryentityCtg">
 			<option value="1">${nls.layer1}</option>
 			<option value="2">${nls.layer2}</option>
  			<option value="3">${nls.layer3}</option>
@@ -20,58 +20,54 @@
 		<div>
 			<h3>${nls.selectField}</h3>
 			<div style="width: 100%; display: flex;	flex-direction: row;">
-				<select class="menuCtg" id="itemsFields" style="width: 50%"></select>
-  	        	<input class="menuCtg" type="text" id="searchValue"/ style="width: 100%;">
+				<select class="menuCtg" id="itemsFieldsCtg" style="width: 50%"></select>
+  	        	<input class="menuCtg" type="text" id="searchValueCtg"/ style="width: 100%;">
 			</div>
 		</div>
 		<div>
-			<input class="execButtonCtg" id="searchDesc" type="button" value="Buscar">
+			<input class="execButtonCtg" id="searchDescCtg" type="button" value="Buscar">
 		</div>
-		<div class="resultsProcessCtg" id="info"></div>
+		<div class="resultsProcessCtg" id="infoCtg"></div>
 	</div>
 
 	<div id="drawCtg" class="tabcontentCtg">
 		<div style="justify-content: center; display: flex;">
-			<button class="drawCtg" id="point" title="${nls.point}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
-	        <button class="drawCtg" id="polyline" title="${nls.polyline}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
-	        <button class="drawCtg" id="polygon" title="${nls.polygon}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
-	        <button class="drawCtg" id="erase" title="${nls.erase}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
+			<button class="drawCtg" id="pointCtg" title="${nls.point}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
+	        <button class="drawCtg" id="polylineCtg" title="${nls.polyline}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
+	        <button class="drawCtg" id="polygonCtg" title="${nls.polygon}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
+	        <button class="drawCtg" id="eraseCtg" title="${nls.erase}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
 
 	        <form enctype="multipart/form-data" method="post" id="uploadFormCtg" style="height: 40px; padding: 3px;">
-	        	<div class="uploadCtg" id="uploadShp">
+	        	<div class="uploadCtg" id="uploadShpCtg">
 		        	<input class="uploadButtonCtg" type="file" multiple="false" data-dojo-attach-point="fileInputCtg" name="file" accept=".zip" id="fileUploadCtg" data-dojo-attach-event="onClick: _onUploadCtg"//>
 		        </div>
 		    </form>
 
 		</div>
 
-		<input type="checkbox" id="actBuff" data-dojo-attach-event="onClick: _activateBuffer" style="margin-bottom: 12px;">${nls.buffer}
-	    <div id="bufferCtg" data-dojo-attach-point="buffer" class="bufferCtgClass" style="">
+		<input type="checkbox" id="actBuffCtg" data-dojo-attach-event="onClick: _activateBufferCtg" style="margin-bottom: 12px;">${nls.buffer}
+	    <div id="bufferCtg" data-dojo-attach-point="buffer" class="bufferCtgClass">
 	      <input  class="menuCtg" type="float" id="bufferLength" style="width: 50%;"/>
-	      <select class="menuCtg" id="unit" style="width: 50%;">
+	      <select class="menuCtg" id="unitCtg" style="width: 50%;">
 	        <option value="UNIT_KILOMETER">${nls.unitkilomeres}</option>
 	        <option value="UNIT_METER">${nls.unitmeters}</option>
 	        <option value="UNIT_DEGREE">${nls.unitdegree}</option>
 	      </select>
-	      <button class="drawBufferCtg" id="buffer" data-dojo-attach-event="onClick: _makeBuffer"></button>
+	      <button class="drawBufferCtg" id="bufferCtg" data-dojo-attach-event="onClick: _makeBufferCtg"></button>
 	    </div>
 		<div>
-			<input class="execButtonCtg" type="button"  data-dojo-attach-event="onClick: _executeProcess" value="Ejecutar">
+			<input class="execButtonCtg" type="button"  data-dojo-attach-event="onClick: _executeProcessCtg" value="Ejecutar">
 		</div>
 		
-		<div class="status" id="loaderCtg"></div>
-		<div class="status" id="errorCtg" style="text-align: center;">${nls.error}</div>
+		<div class="statusCtg" id="loaderCtg"></div>
+		<div class="statusCtg" id="errorCtg" style="text-align: center;">${nls.error}</div>
 		<div class="resultsProcessCtg" id="resultCtg">
-			<a href="" id="downloadzip">${nls.download}</a>
-			<span id="extentgeometry" style="cursor: pointer";>${nls.extent}</span>
+			<a href="" id="downloadzipCtg">${nls.download}</a>
+			<span id="extentgeometryCtg" style="cursor: pointer";>${nls.extent}</span>
 		</div>
 
     </div>
-    <div id="upload-status" style="bottom: 0px;"></div>
+    <div id="upload-statusCtg"></div>
 
-    <!-- <div id="resultCtg" class="tabcontentCtg">
-        <input href="" type="button" class="uploadButtonCtg" value="downloadzip"/>
-    	
-    </div> -->
 </div>
 

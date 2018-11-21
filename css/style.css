@@ -1,3 +1,11 @@
+.ConsultaTematicaGeologica h3 {
+  font-size: 1.2em;
+}
+
+.ConsultaTematicaGeologica h3, p {
+  margin-top: 0;
+}
+
 /*Contenedor de caracter informativo*/
 .contentsCtg{
   text-align: justify;
@@ -21,23 +29,6 @@ select.combosCtg option{
 select.combosCtg option:hover{
   background-color: #ddd;
   font-weight: bold;
-}
-
-/*-------------------------------------------*/
-
-.consultatematica h3 {
-  font-size: 1.2em;
-}
-
-.consultatematica h3, p {
-  margin-top: 0;
-}
-
-/*Contenedor de caracter informativo*/
-.contentsCtg{
-	text-align: justify;
-  text-justify: inter-word;
-  margin-bottom: 12px;
 }
 
 /*Selector de tipo de variable*/
@@ -77,7 +68,7 @@ div.tabCtg button:hover {
     font-weight: bold;
 }
 
-.method.active{
+.methodCtg.active{
   /*background-color: #ccc;*/
   font-weight: bold;  
   border-bottom: 2px solid #898989;
@@ -108,16 +99,6 @@ div.tabCtg button:hover {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 /*Estilos de botones de dibujo*/
 
 .drawCtg{
@@ -138,57 +119,40 @@ div.tabCtg button:hover {
   border: none;
 }
 
-.resbtnCtg{
-  padding: 1%;
-  width: 40px;
-  height: 40px;
-  border: none;
-  cursor: pointer;
-  margin: 3px;
-  margin-bottom: 12px;
-}
-
-
 /*--------------------------------------------------------------*/
 
-#point{
+#pointCtg{
   background: url('img/point.png') no-repeat 50% 50%;
   background-color: #ddd;
 }
 
-#polyline{
+#polylineCtg{
   background: url('img/line.png') no-repeat 50% 50%;
   background-color: #ddd;
 }
 
-#polygon{
+#polygonCtg{
   background: url('img/polygon.png') no-repeat 50% 50%;
   background-color: #ddd;
 }
 
-#erase{
+#eraseCtg{
   background: url('img/delete.png') no-repeat 50% 50%;
   background-color: #e95453;
 }
 
-#buffer{
+#bufferCtg{
   background: url('img/buffer.png') no-repeat 50% 50%;
   background-color: #004c73;  
 }
 
-#uploadShp{
+#uploadShpCtg{
   background: url('img/upload.png') no-repeat 50% 50%;
   background-color: #76a5ce;
 }
 
-/*.drawHz.active{
-  background-color: #e95453;
-}
-*/
-
 
 /*Estilos para el buscador de archivos locales*/
-
 div.uploadCtg{
   height: 40px;
   width: 40px;
@@ -196,7 +160,6 @@ div.uploadCtg{
   padding: 1%;
   right: 0px;
 }
-
 
 div.uploadCtg:hover {
     opacity: 2;
@@ -218,25 +181,15 @@ div.uploadCtg input[type="file"] {
     cursor:pointer;
     display: inline-block;
     height: 40px;
-    /*margin-right:15px;*/
     width: 40px;
-    /*padding:0 20px;*/
     box-sizing: content-box;
 }
 
-/*.tableContainerCtg{
-  display: none;
-}
 
-.tableContainerCtg.active{
-  display: block;
-}
-*/
 /* ::::::::::::::::::::::::::::::::::::::: */
 /*Estilos de la seccion de estado*/
 
 #downloadCtg{
-  /*display: flex;*/
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 4px;
@@ -272,7 +225,7 @@ div.uploadCtg input[type="file"] {
   100% { transform: rotate(360deg); }
 }
 
-#downloadzip{
+#downloadzipCtg{
   width: 50%;
   border: none;
   border-radius: 0px;
@@ -286,23 +239,14 @@ div.uploadCtg input[type="file"] {
   box-sizing: content-box;
 }
 
-.status{
+.statusCtg{
   width: 100%;
   display: none;
 }
 
 
-.status.active{
+.statusCtg.active{
   display: flex;
-}
-
-/*::::::::::::::::::::::::::::::::::::::::::::::::::*/
-
-progress#barCtg {
-  text-align: center;
-}
-progress#barCtg:after  {
-  content: attr(value)'%';
 }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -337,38 +281,10 @@ progress#barCtg:after  {
 
 /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-
-.buttonSearch{
-  padding: 0 18px;
-  height: 32px;
-  line-height: 33px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  min-width: 10px;
-}
-
-
-.infoFields{
-  /*padding: 0px; */
-  margin: 5px; 
-  background-color:#eee;
-  width: 50%; 
-}
-
-
-div.tableContainerCtg{
-  padding: 3px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
-
-
-
-/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-
 .bufferCtgClass{
   display: none;
   margin-bottom: 20px;
+  height: 30px;
 }
 
 .bufferCtgClass.active{
