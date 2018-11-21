@@ -178,8 +178,9 @@ div.tabCtg button:hover {
 
 #uploadShp{
   background: url('img/upload.png') no-repeat 50% 50%;
-  background-color: #ddd;
+  background-color: #76a5ce;
 }
+
 /*.drawHz.active{
   background-color: #e95453;
 }
@@ -189,37 +190,37 @@ div.tabCtg button:hover {
 /*Estilos para el buscador de archivos locales*/
 
 div.uploadCtg{
-  border-radius: 5px;
-  height: 38px;
+  height: 40px;
+  width: 40px;
   border: 1px solid #ddd;
-  padding: 3px;
-  margin-bottom: 12px;
+  padding: 1%;
+  right: 0px;
 }
 
 
 div.uploadCtg:hover {
-    opacity:0.95;
+    opacity: 2;
+    background-color: #004c73;
+
 }
 
 div.uploadCtg input[type="file"] {
-    width: auto;
+    /*display: none; */
     opacity: 0;
     cursor:pointer;
-    position:absolute;
-    left:0;
+    right: 0;
 }
 
 .uploadButtonCtg {
     background-color: #004c73;
     border: none;
-    border-radius: 3px;
     color: #FFF;
     cursor:pointer;
     display: inline-block;
-    height: 30px;
-    margin-right:15px;
-    width: auto;
-    padding:0 20px;
+    height: 40px;
+    /*margin-right:15px;*/
+    width: 40px;
+    /*padding:0 20px;*/
     box-sizing: content-box;
 }
 
@@ -271,6 +272,19 @@ div.uploadCtg input[type="file"] {
   100% { transform: rotate(360deg); }
 }
 
+#downloadzip{
+  width: 50%;
+  border: none;
+  border-radius: 0px;
+  line-height: 30px;
+  vertical-align: middle;
+  height: 30px;
+  color: #FFF;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 15px;
+  box-sizing: content-box;
+}
 
 .status{
   width: 100%;
@@ -280,13 +294,6 @@ div.uploadCtg input[type="file"] {
 
 .status.active{
   display: flex;
-}
-
-/*::::::::::::::::::::::::::::::::::::::::::::::::::*/
-
-#extentgeometry{
-  cursor: pointer;
-  text-decoration: underline;
 }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -301,14 +308,26 @@ progress#barCtg:after  {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
 .resultsProcessCtg{
+  display: flex; 
+  align-items: center;
   display: none;
   margin-top: 10px;
   height: auto;
-  border-radius: 5px;
   border: 1px solid #ddd;
   width: 100%;
-  font-family: "Courier New", Times, monospace;
   padding: 2%;
+  background-color: #b7b7b7;
+
+}
+
+.resultsProcessCtg a{
+  color: black;
+  text-align: center;
+}
+
+.resultsProcessCtg span{
+  text-align: center;
+  cursor: pointer;
 }
 
 .resultsProcessCtg.active{

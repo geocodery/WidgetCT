@@ -31,22 +31,17 @@
 	</div>
 
 	<div id="drawCtg" class="tabcontentCtg">
-		<div>
+		<div style="justify-content: center; display: flex;">
 			<button class="drawCtg" id="point" title="${nls.point}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
 	        <button class="drawCtg" id="polyline" title="${nls.polyline}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
 	        <button class="drawCtg" id="polygon" title="${nls.polygon}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
 	        <button class="drawCtg" id="erase" title="${nls.erase}" data-dojo-type="dijit/form/Button" data-dojo-attach-event="onClick: _activateToolCtg"></button>
 
-        	<!-- <form enctype="multipart/form-data" method="post" id="uploadFormCtg">
-				<input class="drawCtg" id="uploadShp" type="file" multiple="false" data-dojo-attach-point="fileInputCtg" name="file" accept=".zip" id="fileUploadCtg"
-				data-dojo-attach-event="onChange: _onUploadCtg"//>
-			</form> -->
-
-			<form enctype="multipart/form-data" method="post" id="uploadFormCtg">
-		    <div id="featureCtg">
-		        <input type="file" multiple="false" data-dojo-attach-point="fileInputCtg" name="file" accept=".zip" id="fileUploadCtg" data-dojo-attach-event="onChange: _onUploadCtg"//>
-		        <span class="file-upload-status" style="opacity:1;" id="upload-status">
-		    </div>
+	        <form enctype="multipart/form-data" method="post" id="uploadFormCtg" style="height: 40px; padding: 3px;">
+	        	<div class="uploadCtg" id="uploadShp">
+		        	<input class="uploadButtonCtg" type="file" multiple="false" data-dojo-attach-point="fileInputCtg" name="file" accept=".zip" id="fileUploadCtg" data-dojo-attach-event="onClick: _onUploadCtg"//>
+		        </div>
+		    </form>
 
 		</div>
 
@@ -63,11 +58,14 @@
 		<div>
 			<input class="execButtonCtg" type="button"  data-dojo-attach-event="onClick: _executeProcess" value="Ejecutar">
 		</div>
-		<div class="resultsProcessCtg" id="info"></div>
+		
 		<div class="status" id="loaderCtg"></div>
 		<div class="status" id="errorCtg" style="text-align: center;">${nls.error}</div>
-		<a href="" id="downloadzip">${nls.download}</a>
-		<span id="extentgeometry">extent</span>
+		<div class="resultsProcessCtg" id="resultCtg">
+			<a href="" id="downloadzip">${nls.download}</a>
+			<span id="extentgeometry" style="cursor: pointer";>${nls.extent}</span>
+		</div>
+
     </div>
     <div id="upload-status" style="bottom: 0px;"></div>
 

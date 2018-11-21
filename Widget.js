@@ -359,19 +359,35 @@ define([
                   self.shapetype = "esriGeometryPolygon";
                   break;
               case "erase":
+                  self._removeLayersCtg();
                   symbolCtg = null
               }
           var graphic = new Graphic(evt.geometry, symbolCtg);
           _viewerMap.graphics.add(graphic);
 
           inputGeom = JSON.stringify(graphic.geometry).replace(/['"]+/g, '\'');
-          self.geometryEvtCtg = evt.geometry
+          self.geometryEvtCtg = evt.geometry;
 
           if (evt.geometry.type == "polygon"){
-              area = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "square-kilometers");
-              console.log(area);
+              console.log(evt.geometry);
+              self.area = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "hectares");
+              console.log(self.area);
           }
           self.geom = inputGeom.replace(/'/g, '"');
+        },
+
+        _removeLayersCtg: function(){
+          _viewerMap.graphics.clear();
+          _viewerMap.getLayer(glid).clear();
+
+          arrayUtils.map(_viewerMap.graphicsLayerIds, lang.hitch(function(glid){
+             var lyr = _viewerMap.getLayer(glid);
+             if(lyr instanceof FeatureLayer){
+               lyr.clearSelection();
+             } else {
+               _viewerMap.getLayer(glid).clear();
+             }
+          }));
         },
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -394,19 +410,29 @@ define([
           }else{
             sql = "";
           }
-
-          if(self.graphicBuffer){
-            geometry = self.graphicBuffer;
-          }else{
-            geometry = self.geom;
-          }
-
-          console.log(geometry);
-          console.log(self.code);
           console.log(sql);
 
-          self._gprun(geometry, self.code, sql);
-          delete self.graphicBuffer;
+          var geometry;
+          if(self.graphicBuffer){
+            geometry = self.graphicBuffer;
+          }else if(self.geom){
+            geometry = self.geom;
+          }
+          console.log(geometry);
+          console.log(self.area);
+
+          if (self.area) {
+            if (self.area <= 100000) {
+                self._gprun(geometry, self.code, sql);
+                delete self.graphicBuffer;
+            }else{
+                alert("El grafico realizado supera el valor de area permitido");
+            }
+          }else{
+            if (sql!="") {
+              self._gprun(geometry, self.code, sql);
+            }
+          }
         },
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -456,6 +482,8 @@ define([
             var GeomBuffer = inputGeomBuffer.replace(/'/g, '"');
             self.graphicBuffer = GeomBuffer;
             _viewerMap.graphics.add(graphic);
+            self.area = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "hectares");
+            console.log(self.area);
             // self._gprun(inputGeomBuffer, self._getSelectedOption('queryentity'));
           });
         },
@@ -492,7 +520,7 @@ define([
           if(info.ok){
             info.baseFileName = self._getBaseFileNameCtg(info.filename);
           }else{
-            self._errorFormatCtg();
+            self._errorHandler();
           }
           return info;
         },
@@ -505,13 +533,9 @@ define([
           };
         },
 
+
         _endsWithCtg: function(sv, sfx){
           return (sv.indexOf(sfx, (sv.length - sfx.length)) !== -1);
-        },
-
-        _errorHandler: function(error) {
-            dom.byId('upload-status').innerHTML =
-            "<p style='color:red'>" + error.message + "</p>";
         },
 
         _generateFeatureCollection: function(fileName){
@@ -577,8 +601,11 @@ define([
               layers.push(featureLayer);
           });
           var geom = featureCollection.layers[0].featureSet.features[0].geometry;
+          self.geometryEvtCtg = geom;
           var graphic = new Graphic(geom);
           inputGeom = JSON.stringify(graphic.geometry).replace(/['"]+/g, '\'');
+          self.area = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "hectares");
+          console.log(self.area);
           self.geom = inputGeom.replace(/'/g, '"');
 
           _viewerMap.addLayers(layers);
@@ -646,6 +673,7 @@ define([
                 gp.getResultData(JobInfo.jobId, "output_exporJson", self._extentProcess);
                 // Se activa el boton de descarga
                 self._activeContainers("loaderCtg", false);
+                self._activeContainers("resultCtg", true);
             }
         },
 
@@ -685,7 +713,6 @@ define([
         _errorHandler: function(error) {
           dom.byId('upload-status').innerHTML =
           "<p style='color:red'>" + error.message + "</p>";
-          console.log("error????");
         },
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
