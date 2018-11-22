@@ -14,7 +14,6 @@ define([
         "dojo/dom-class",
         "dojo/dom-construct",
         "dojo/fx",
-        "dojo/fx/Toggler",
         "dojo/json",
         "dojo/on",
         "dojo/parser",
@@ -61,7 +60,6 @@ define([
                     domClass,
                     domConstruct,
                     coreFx,
-                    Toggler,
                     JSON,
                     on,
                     parser,
@@ -159,7 +157,7 @@ define([
 
         // Cambia el color de las herramientas de dibujo
         _changeColorToolbarCtg: function(onid){
-            var array = ['point', 'polyline', 'polygon'];
+            var array = ["point", "polyline", "polygon"];
             for (i=0; i < array.length; i++){
                 if (array[i] != onid){
                     dojo.byId(array[i]).style.backgroundColor = "#ddd";
@@ -515,7 +513,7 @@ define([
           var fileInfo = self._getFileInfoCtg();
           if (fileInfo.ok){
             _viewerMap.graphics.clear();
-            self._generateFeatureCollectionCtg(fileInfo.filename);
+            self._generateFeatureCtg(fileInfo.filename);
           };
         },
 
@@ -524,12 +522,9 @@ define([
           return (sv.indexOf(sfx, (sv.length - sfx.length)) !== -1);
         },
 
-        _generateFeatureCollectionCtg: function(fileName){
-          console.log(fileName);
+        _generateFeatureCtg: function(fileName){
           var name = fileName.split(".");
-          console.log(name);
           name = name[0].replace("c:\\fakepath\\", "");
-          console.log(name);
           dom.byId('upload-statusCtg').innerHTML = '<b>Loading </b>' + name;
 
           var params = {
@@ -673,7 +668,6 @@ define([
         _downloadZipCtg: function(outputFile){
            // Se obtiene la url del resultado del geoproceso
            var url = outputFile.value.url;
-           console.log(url);
            // Se agrega la url a la etiqueta html <a>
            domAttr.set(dojo.byId("downloadzipCtg"), 'href', url);
         },
