@@ -1,4 +1,61 @@
 {
   "serviceGeo": "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/",
-  "serviceUrl": "http://geocatminapp.ingemmet.gob.pe/arcgis/rest/services/temp/consultatematica/GPServer/Consultas%20Tematicas"
+  "serviceUrl": "http://geocatminapp.ingemmet.gob.pe/arcgis/rest/services/temp/consultatematica/GPServer/Consultas%20Tematicas",
+  "services":[
+  	{
+  		"name": "geologia",
+      	"url": "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/",
+  		"layer":[
+  			{
+  				"name": "Hojas",
+  				"alias": "Hojas",
+  				"code": "0",
+  				"type": "esriGeometryPolygon",
+  				"url": "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/0"
+  			},
+  			{
+  				"name": "Secciones",
+  				"alias": "Secciones Geologicas",
+  				"code": "1",
+  				"type": "esriGeometryPolyline",
+  				"url": "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/1"
+  			},
+  			{
+  				"name": "Buzamientos",
+  				"alias": "Secciones",
+  				"code": "2",
+  				"type": "esriGeometryPolyline",
+  				"url": "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/2"
+  			},
+  			{
+  				"name": "Fallas",
+  				"alias": "Secciones",
+  				"code": "3",
+  				"type": "esriGeometryPolyline",
+  				"url": "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/3"
+  			},
+  			{
+  				"name": "Pliegues",
+  				"alias": "Pliegues",
+  				"code": "4",
+  				"type": "esriGeometryPolyline",
+  				"url": "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/4"
+  			},
+  			{
+  				"name": "Contactos",
+  				"alias": "Contactos",
+  				"code": "5",
+  				"type": "esriGeometryPolyline",
+  				"url": "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/5"
+  			},
+  			{
+  				"name": "Geologia",
+  				"alias": "Geologia",
+  				"code": "6",
+  				"type": "esriGeometryPolygon",
+  				"url": "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/6"
+  			}
+  		]
+  	}
+  ]
 }

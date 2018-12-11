@@ -121,22 +121,22 @@ div.tabCtg button:hover {
 
 /*--------------------------------------------------------------*/
 
-#pointCtg{
+#point{
   background: url('img/point.png') no-repeat 50% 50%;
   background-color: #ddd;
 }
 
-#polylineCtg{
+#polyline{
   background: url('img/line.png') no-repeat 50% 50%;
   background-color: #ddd;
 }
 
-#polygonCtg{
+#polygon{
   background: url('img/polygon.png') no-repeat 50% 50%;
   background-color: #ddd;
 }
 
-#eraseCtg{
+#erase{
   background: url('img/delete.png') no-repeat 50% 50%;
   background-color: #e95453;
 }
