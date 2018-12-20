@@ -176,6 +176,7 @@ define([
           // "http://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_INTEGRADA_v2/MapServer/"
           var url=self.config.serviceGeo;
           url=url.concat(code);
+          console.log(url);
           return url;
         },
 
@@ -191,6 +192,7 @@ define([
               },
               "callbackParamName": "callback"
             });
+            console.log(requestHandle);
             requestHandle.then(self._requestSucceededCtg, self._errorHandlerCtg);
           });
         },
@@ -223,26 +225,28 @@ define([
 
         // Funcionalidad de hacer query al campo seleccionado considerando un parámetro
         _ValuesfromFieldCtg :function(){
-          var query = new Query();
           on(dom.byId("searchDescCtg"), "click", function(evt){
+            var nameSearch = dom.byId("searchValueCtg").value;
+            var querytext = dom.byId("itemsFieldsCtg").value;
+            self.sqlCtg = "UPPER(" + querytext + ") LIKE UPPER('%" + nameSearch + "%')";
             var urlService = self._selectUrlServiceCtg(dom.byId("queryentityCtg").value);
-            var queryTask = new QueryTask(urlService);
             var layer = new FeatureLayer(urlService, {
                   mode: FeatureLayer.MODE_ONDEMAND,
                   outFields: ["*"],
               opacity: 0.9,
               visible: true
             });
-            var nameSearch = dom.byId("searchValueCtg").value;
-            query.text = dom.byId("itemsFieldsCtg").value;
-            query.outFields =  ["*"];
+            var infoTemplate = new InfoTemplate("Attributes", "${*}");
+            layer.setInfoTemplate(infoTemplate);
+
+            self.layerquery = layer;
+            self.layerquery.setDefinitionExpression(self.sqlCtg);
+            _viewerMap.addLayer(self.layerquery);
             
-            self.sqlCtg = "UPPER(" + query.text + ") LIKE UPPER('%" + nameSearch + "%')";
-            query.where = self.sqlCtg;
-            query.returnGeometry = true;
-            query.outSpatialReference = {wkid:102100};
-            console.log(query);
-            queryTask.execute(query).then(self._showFieldValuesCtg, self._errorHandlerCtg);
+            console.log(self.layerquery);
+            var resultCount = self.layerquery._graphicsVal;
+            console.log(resultCount);
+            // queryTask.execute(query).then(self._showFieldValuesCtg, self._errorHandlerCtg);
           });
         },
 
@@ -255,7 +259,6 @@ define([
             self._activeContainersCtg("infoCtg", true);
             var results = resultado;
           }
-
           var resultItems = [];
           var resultCount = results.features.length;
           var FieldValues = [];
@@ -359,11 +362,10 @@ define([
 
           inputGeom = JSON.stringify(graphic.geometry).replace(/['"]+/g, '\'');
           self.geometryEvtCtg = evt.geometry;
+          console.log(self.geometryEvtCtg);
 
           if (evt.geometry.type == "polygon"){
-              console.log(evt.geometry);
               self.areaCtg = geometryEngine.geodesicArea(geometryEngine.simplify(graphic.geometry), "hectares");
-              console.log(self.areaCtg);
           }
           self.geomCtg = inputGeom.replace(/'/g, '"');
         },
@@ -401,14 +403,19 @@ define([
             sql = "UPPER(" + itemsFields + ") LIKE UPPER('%" + nameSearch + "%')";
           }else{
             sql = "";
-          }
+          };
+
 
           var geometry;
           if(self.graphicBufferCtg){
             geometry = self.graphicBufferCtg;
           }else if(self.geomCtg){
             geometry = self.geomCtg;
-          }
+          };
+
+          console.log(geometry);
+          console.log(self.codeCtg);
+          console.log(sql);
 
           if (self.areaCtg) {
             if (self.areaCtg <= 100000) {
