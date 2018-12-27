@@ -3,10 +3,10 @@
 		<p>${nls.abstract}</p><a href="UserGuide.pdf" download>ver manual</a>
 	</div>
 
- 	<div class="tabCtg">
+ 	<!-- <div class="tabCtg">
         <button class="methodCtg active" id="selectbtnCtg"  data-dojo-attach-event="onClick: _onchangetabCtg">${nls.select}</button>
-        <button class="methodCtg" id="drawbtnCtg"  data-dojo-attach-event="onClick: _onchangetabCtg">Consulta</button>
-	</div>
+        <button class="methodCtg" id="drawbtnCtg"  data-dojo-attach-event="onClick: _onchangetabCtg">Descarga</button>
+	</div> -->
 
 	<div id="selectCtg" class="tabcontentCtg active">
 		<select multiple="multiple" data-dojo-attach-point="containerNode, focusNode" class="combosCtg" id="queryentityCtg">
@@ -29,6 +29,7 @@
 		</div>
 		<div class="resultsProcessCtg" id="infoCtg"></div>
 	</div>
+	<br>
 
 	<div id="drawCtg" class="tabcontentCtg">
 		<div style="justify-content: center; display: flex;">

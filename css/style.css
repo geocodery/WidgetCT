@@ -75,13 +75,13 @@ div.tabCtg button:hover {
 }
 
 .tabcontentCtg{
-  display: none;
-}
-
-.tabcontentCtg.active{
   display: block;
 }
 
+/*.tabcontentCtg.active{
+  display: block;
+}
+*/
 .execButtonCtg {
   width: 100%;
   text-align: center;

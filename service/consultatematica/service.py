@@ -1,7 +1,22 @@
 import sys, os
 # ONLY USE IN GEOPROCESSING SERVICE
 
+# Ruta del servicio
 sys.path.insert(0, r'D:\\aplicativos\\geoprocesos\\consultatematica')
+path = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(path)
+arcpy.AddMessage(path)
+
+try:
+    for root, dirs, files in os.walk("consultatematica"):
+        arcpy.AddMessage(root)
+    arcpy.AddMessage("LISTADOS")
+    arcpy.AddMessage(os.listdir(r'D:\\aplicativos'))
+    arcpy.AddMessage(os.listdir(r'D:\\aplicativos\\complementos'))
+    arcpy.AddMessage(os.listdir(r'D:\\aplicativos\\geoprocesos'))
+    arcpy.AddMessage(os.listdir(r'D:\\aplicativos\\geoprocesos\\consultatematica'))
+except:
+    arcpy.AddMessage("paso")
 
 import main
 

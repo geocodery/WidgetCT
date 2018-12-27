@@ -49,7 +49,7 @@ class Parameters(object):
 
     @property
     def capa6(self):
-        self.name = 'DATA_GIS.PO_0101003_GEOLOGIA'
+        self.name = 'DATA_GIS.PO_0101008_GEOLOGIAHOJA'
         self._path = os.path.join(CONN, self.ds, self.name)
         return self._path
 

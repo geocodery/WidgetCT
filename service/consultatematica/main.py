@@ -99,7 +99,7 @@ class ConsultaTematica(object):
         # Seleccionar area o todos los elementos
         if self.jsonClip != None:
             lenfeature=len([x[0] for x in arcpy.da.SearchCursor(self.path, ["OID@"], self.query)])
-            if lenfeature>3000 and self.query:
+            if lenfeature>10000 and self.query:
                 errorMsg = "Se ha sobrepasado el limite de la consulta, favor de disminuir el area de la consulta o hacer una consulta mas especifica"
                 arcpy.AddMessage(errorMsg)
                 # arcpy.SetParameterAsText(6, outErrorMsg) #
