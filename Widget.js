@@ -103,11 +103,11 @@ define([
         return declare([BaseWidget], {
 
         
-        baseClass: 'ConsultaTematicaGeologica',  // Clase principal para CSS
+        baseClass: 'ConsultaGeologica',  // Clase principal para CSS
         postCreate: function() {        // Ejecuta despues de crearse
           this.inherited(arguments);
           self = this;
-          console.log('ConsultaTematicaGeologica::postCreate');
+          console.log('ConsultaGeologica::postCreate');
         },
 
         // Ejecuta al abrir widget 
@@ -118,12 +118,12 @@ define([
             self = this;
             self._ValuesfromFieldCtg();
             self.startupAddShpCtg();
-            console.log('ConsultaTematicaGeologica::startup');
+            console.log('ConsultaGeologica::startup');
         },
 
         // Configuracion de ventana de trabajo
         onOpen: function(){
-          console.log('ConsultaTematicaGeologica::onOpen');
+          console.log('ConsultaGeologica::onOpen');
           var panel = this.getPanel();
           panel.position.height = 700;
           panel.setPosition(panel.position);
@@ -418,7 +418,7 @@ define([
           console.log(sql);
 
           if (self.areaCtg) {
-            if (self.areaCtg <= 100000) {
+            if (self.areaCtg <= 1000000) {
                 self._gprunCtg(geometry, self.codeCtg, sql);
                 delete self.graphicBufferCtg;
             }else{

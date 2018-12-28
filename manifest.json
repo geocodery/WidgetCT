@@ -1,6 +1,6 @@
 {
-  "name": "consultatematica",
-  "label": "Consulta Temática",
+  "name": "consultageologica",
+  "label": "Consulta Geológica",
   "2D": true,
   "3D": false,
   "platform": "HTML",
