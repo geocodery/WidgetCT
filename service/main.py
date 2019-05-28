@@ -1,6 +1,6 @@
 import sys
 # ONLY USE IN GEOPROCESSIN SERVICE
-sys.path.insert(0, r'D:\\aplicativos\\geoprocesos\\consultatematica')
+sys.path.insert(0, r'D:\\aplicaciones\\geoproceso\\consultatematica')
 
 from config import *
 from model import *
@@ -121,7 +121,3 @@ class ConsultaTematica(object):
             pass
         else:
             self.process()
-
-# if __name__ == "__main__":
-#     poo = ConsultaTematica()
-#     poo.main()
